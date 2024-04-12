@@ -10,6 +10,8 @@ export default function CartDetails() {
   const router = useRouter()
   const { items, itemsPrice, decrease, increase } = useCartService()
 
+  console.log(items)
+
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
     setMounted(true)
