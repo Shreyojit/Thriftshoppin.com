@@ -39,43 +39,44 @@ export default function CartDetails() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
-                  <tr key={item.slug}>
-                    <td>
-                      <Link
-                        href={`/product/${item.slug}`}
-                        className="flex items-center"
-                      >
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          width={50}
-                          height={50}
-                        ></Image>
-                        <span className="px-2">{item.name}</span>
-                      </Link>
-                    </td>
-                    <td>
-                      <button
-                        className="btn"
-                        type="button"
-                        onClick={() => decrease(item)}
-                      >
-                        -
-                      </button>
-                      <span className="px-2">{item.qty}</span>
-                      <button
-                        className="btn"
-                        type="button"
-                        onClick={() => increase(item)}
-                      >
-                        +
-                      </button>
-                    </td>
-                    <td>${item.price}</td>
-                  </tr>
-                ))}
-              </tbody>
+  {items.map((item, index) => (
+    <tr key={`${item.slug}-${index}`}> {/* Use a combination of slug and index */}
+      <td>
+        <Link
+          href={`/product/${item.slug}`}
+          className="flex items-center"
+        >
+          <Image
+            src={item.image}
+            alt={item.name}
+            width={50}
+            height={50}
+          />
+          <span className="px-2">{item.name}</span>
+        </Link>
+      </td>
+      <td>
+        <button
+          className="btn"
+          type="button"
+          onClick={() => decrease(item)}
+        >
+          -
+        </button>
+        <span className="px-2">{item.qty}</span>
+        <button
+          className="btn"
+          type="button"
+          onClick={() => increase(item)}
+        >
+          +
+        </button>
+      </td>
+      <td>${item.price}</td>
+    </tr>
+  ))}
+</tbody>
+
             </table>
           </div>
           <div>

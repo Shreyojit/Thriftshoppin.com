@@ -71,22 +71,31 @@ export default function useCartService() {
       })
     },
     decrease: (item: OrderItem) => {
-      const exist = items.find((x) => x.slug === item.slug)
-      if (!exist) return
-      const updatedCartItems =
-        exist.qty === 1
-          ? items.filter((x: OrderItem) => x.slug !== item.slug)
-          : items.map((x) => (item.slug ? { ...exist, qty: exist.qty - 1 } : x))
-      const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
-        calcPrice(updatedCartItems)
+      const updatedCartItems = items.reduce((acc, cartItem) => {
+        if (cartItem.slug === item.slug) {
+          if (cartItem.qty === 1) {
+            // Remove the item if its quantity is 1
+            return acc;
+          } else {
+            // Decrease the quantity of the item
+            return [...acc, { ...cartItem, qty: cartItem.qty - 1 }];
+          }
+        }
+        return [...acc, cartItem];
+      }, [] as OrderItem[]);
+    
+      const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calcPrice(updatedCartItems);
+    
       cartStore.setState({
         items: updatedCartItems,
         itemsPrice,
         shippingPrice,
         taxPrice,
         totalPrice,
-      })
+      });
     },
+    
+    
     saveShippingAddrress: (shippingAddress: ShippingAddress) => {
       cartStore.setState({
         shippingAddress,
