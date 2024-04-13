@@ -1,5 +1,12 @@
 import mongoose from 'mongoose'
 
+export type User = {
+  _id: string
+  name: string
+  email: string
+  isAdmin: boolean
+}
+
 const UserSchema = new mongoose.Schema(
   {
     name: {
@@ -20,6 +27,6 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const UserModel = mongoose.models.User || mongoose.model('User', UserSchema)
+const UserModel = mongoose.models?.User || mongoose.model('User', UserSchema)
 
 export default UserModel
